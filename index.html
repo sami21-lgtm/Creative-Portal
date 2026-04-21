@@ -3,96 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studies Dashboard | Sami Admin</title>
+    <title>Studies Admin Dashboard | Sami</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <header>
-        <div class="brand">📖 Studies</div>
-        <div class="header-tools">
-            <select id="langSelector" onchange="changeLanguage()" class="lang-select">
-                <option value="en">English</option>
-                <option value="bn">বাংলা</option>
-                <option value="ar">العربية</option>
-            </select>
-            <span class="user-info"><i class="fas fa-user-circle"></i> alice.johnson</span>
+    <div id="login-screen" class="overlay">
+        <div class="login-card">
+            <div class="icon-header">📖</div>
+            <h2>Studies Login</h2>
+            <p>Please enter your credentials</p>
+            <div class="form-group">
+                <input type="text" id="userInput" placeholder="Username (sami)">
+                <input type="password" id="passInput" placeholder="Password (12345)">
+                <button class="primary-btn" onclick="handleLogin()">Sign In</button>
+            </div>
+            <p id="error-txt" class="error-msg">Invalid username or password!</p>
         </div>
-    </header>
+    </div>
 
-    <div class="container">
-        <nav class="sidebar">
-            <ul>
-                <li onclick="navigate('dashboard')" id="nav-dashboard" class="active">
-                    <i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span>
-                </li>
-                <li onclick="navigate('calendar')" id="nav-calendar">
-                    <i class="fas fa-calendar-alt"></i> <span class="nav-text">Calendar</span>
-                </li>
-                <li onclick="navigate('courses')" id="nav-courses">
-                    <i class="fas fa-book"></i> <span class="nav-text">Courses</span>
-                </li>
-                <li onclick="navigate('leaderboard')" id="nav-leaderboard">
-                    <i class="fas fa-trophy"></i> <span class="nav-text">Leaderboard</span>
-                </li>
-                <li onclick="navigate('notifications')" id="nav-notifications">
-                    <i class="fas fa-bell"></i> <span class="nav-text">Notifications</span>
-                </li>
-            </ul>
-        </nav>
+    <div id="dashboard-main" style="display: none;">
+        <header>
+            <div class="brand">📖 Studies</div>
+            <div class="header-right">
+                <select id="langSelector" onchange="changeLanguage()" class="lang-dropdown">
+                    <option value="en">English</option>
+                    <option value="bn">বাংলা</option>
+                </select>
+                <span class="user-info"><i class="fas fa-user-shield"></i> Sami Admin</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i></button>
+            </div>
+        </header>
 
-        <main class="main-content">
-            
-            <section id="dashboard" class="page active">
-                <h1 id="txt-dash">Analytics Overview</h1>
-                <div class="stats-grid">
-                    <div class="card"><canvas id="passChart"></canvas></div>
-                    <div class="card"><canvas id="diffChart"></canvas></div>
-                    <div class="card"><canvas id="perfChart"></canvas></div>
-                </div>
-            </section>
+        <div class="app-layout">
+            <nav class="sidebar">
+                <ul>
+                    <li onclick="showPage('page-dash')" id="nav-dash" class="active"><i class="fas fa-chart-pie"></i> Dashboard</li>
+                    <li onclick="showPage('page-cal')" id="nav-cal"><i class="fas fa-calendar-days"></i> Calendar</li>
+                    <li onclick="showPage('page-courses')" id="nav-courses"><i class="fas fa-graduation-cap"></i> Courses</li>
+                    <li onclick="showPage('page-notif')" id="nav-notif"><i class="fas fa-bell"></i> Notifications</li>
+                </ul>
+            </nav>
 
-            <section id="calendar" class="page">
-                <h1 id="txt-cal">Student Schedule Calendar</h1>
-                <div class="card calendar-card">
-                    <div class="calendar-header">
-                        <h2>April 2026</h2>
+            <main class="content-area">
+                <section id="page-dash" class="content-page active">
+                    <h1 id="txt-dash-head">Analytics Overview</h1>
+                    <div class="stats-grid">
+                        <div class="card"><canvas id="passChart"></canvas></div>
+                        <div class="card"><canvas id="levelChart"></canvas></div>
+                        <div class="card"><canvas id="perfChart"></canvas></div>
                     </div>
-                    <div class="calendar-grid" id="calGrid">
+                </section>
+
+                <section id="page-cal" class="content-page">
+                    <h1 id="txt-cal-head">Schedule Calendar</h1>
+                    <div class="card">
+                        <div class="calendar-grid" id="calendarBody"></div>
+                    </div>
+                </section>
+
+                <section id="page-courses" class="content-page">
+                    <div class="flex-row">
+                        <h1 id="txt-course-head">Active Courses</h1>
+                        <button class="primary-btn">+ New Course</button>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="card">
+                            <span class="status-badge">Active</span>
+                            <h3>Modern JavaScript</h3>
+                            <p>30 Students • Since Feb 2024</p>
                         </div>
-                </div>
-            </section>
-
-            <section id="courses" class="page">
-                <div class="page-header">
-                    <h1 id="txt-course">My Courses</h1>
-                    <button class="btn-primary">+ Add Course</button>
-                </div>
-                <div class="stats-grid">
-                    <div class="card course-item">
-                        <span class="badge">Active</span>
-                        <h3>Modern JavaScript</h3>
-                        <p>30 Students • Since Feb 1, 2024</p>
+                        <div class="card">
+                            <span class="status-badge">Active</span>
+                            <h3>Python Data Science</h3>
+                            <p>20 Students • Since Apr 2024</p>
+                        </div>
                     </div>
-                    <div class="card course-item">
-                        <span class="badge">Active</span>
-                        <h3>Python for Data Science</h3>
-                        <p>20 Students • Since Apr 1, 2024</p>
+                </section>
+
+                <section id="page-notif" class="content-page">
+                    <h1 id="txt-notif-head">Notifications</h1>
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <p id="txt-empty">No new notifications found.</p>
                     </div>
-                </div>
-            </section>
-
-            <section id="notifications" class="page">
-                <h1 id="txt-notif">Notifications</h1>
-                <div class="empty-state">
-                    <i class="fas fa-bell-slash"></i>
-                    <p id="txt-empty">No notifications found at the moment.</p>
-                </div>
-            </section>
-
-        </main>
+                </section>
+            </main>
+        </div>
     </div>
 
     <script src="script.js"></script>
