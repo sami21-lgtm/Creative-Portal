@@ -3,91 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studies Admin | Sami</title>
+    <title>Studies Dashboard | Sami Admin</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
     <header>
-        <div class="header-brand">📖 Studies</div>
-        <div class="header-right">
-            <select id="langSelector" onchange="changeLanguage()" class="lang-dropdown">
+        <div class="brand">📖 Studies</div>
+        <div class="header-tools">
+            <select id="langSelector" onchange="changeLanguage()" class="lang-select">
                 <option value="en">English</option>
                 <option value="bn">বাংলা</option>
                 <option value="ar">العربية</option>
             </select>
-            <span class="user-name">👤 Emtiaz Hossain Sami</span>
+            <span class="user-info"><i class="fas fa-user-circle"></i> alice.johnson</span>
         </div>
     </header>
 
-    <div class="wrapper">
+    <div class="container">
         <nav class="sidebar">
             <ul>
-                <li onclick="navigate('dashboard')" id="nav-dashboard" class="active">Dashboard</li>
-                <li onclick="navigate('calendar')" id="nav-calendar">Calendar</li>
-                <li onclick="navigate('courses')" id="nav-courses">Courses</li>
-                <li onclick="navigate('leaderboard')" id="nav-leaderboard">Leaderboard</li>
-                <li onclick="navigate('notifications')" id="nav-notifications">Notifications</li>
+                <li onclick="navigate('dashboard')" id="nav-dashboard" class="active">
+                    <i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span>
+                </li>
+                <li onclick="navigate('calendar')" id="nav-calendar">
+                    <i class="fas fa-calendar-alt"></i> <span class="nav-text">Calendar</span>
+                </li>
+                <li onclick="navigate('courses')" id="nav-courses">
+                    <i class="fas fa-book"></i> <span class="nav-text">Courses</span>
+                </li>
+                <li onclick="navigate('leaderboard')" id="nav-leaderboard">
+                    <i class="fas fa-trophy"></i> <span class="nav-text">Leaderboard</span>
+                </li>
+                <li onclick="navigate('notifications')" id="nav-notifications">
+                    <i class="fas fa-bell"></i> <span class="nav-text">Notifications</span>
+                </li>
             </ul>
         </nav>
 
-        <main class="content">
+        <main class="main-content">
+            
             <section id="dashboard" class="page active">
-                <h1 id="title-dashboard">Analytics Overview</h1>
-                <div class="grid">
+                <h1 id="txt-dash">Analytics Overview</h1>
+                <div class="stats-grid">
                     <div class="card"><canvas id="passChart"></canvas></div>
-                    <div class="card"><canvas id="pieChart"></canvas></div>
-                    <div class="card"><canvas id="barChart"></canvas></div>
+                    <div class="card"><canvas id="diffChart"></canvas></div>
+                    <div class="card"><canvas id="perfChart"></canvas></div>
                 </div>
             </section>
 
             <section id="calendar" class="page">
-                <h1 id="title-calendar">Student Schedule Calendar</h1>
-                <div class="card">
-                    <div class="calendar-grid" id="calGrid"></div>
+                <h1 id="txt-cal">Student Schedule Calendar</h1>
+                <div class="card calendar-card">
+                    <div class="calendar-header">
+                        <h2>April 2026</h2>
+                    </div>
+                    <div class="calendar-grid" id="calGrid">
+                        </div>
                 </div>
             </section>
 
             <section id="courses" class="page">
-                <div class="flex-header">
-                    <h1 id="title-courses">Active Courses</h1>
-                    <button class="primary-btn">+ Add Course</button>
+                <div class="page-header">
+                    <h1 id="txt-course">My Courses</h1>
+                    <button class="btn-primary">+ Add Course</button>
                 </div>
-                <div class="grid">
-                    <div class="card">
+                <div class="stats-grid">
+                    <div class="card course-item">
                         <span class="badge">Active</span>
                         <h3>Modern JavaScript</h3>
-                        <p>30 Students • Feb 2024</p>
+                        <p>30 Students • Since Feb 1, 2024</p>
                     </div>
-                    <div class="card">
+                    <div class="card course-item">
                         <span class="badge">Active</span>
                         <h3>Python for Data Science</h3>
-                        <p>20 Students • Apr 2024</p>
+                        <p>20 Students • Since Apr 1, 2024</p>
                     </div>
-                </div>
-            </section>
-
-            <section id="leaderboard" class="page">
-                <h1 id="title-leaderboard">Leaderboard</h1>
-                <div class="card">
-                    <table style="width:100%; text-align:left; border-collapse:collapse;">
-                        <tr style="border-bottom:1px solid #ddd; height:40px;">
-                            <th>Rank</th><th>Student</th><th>Score</th>
-                        </tr>
-                        <tr>
-                            <td>1 🏆</td><td>Carol White</td><td>85%</td>
-                        </tr>
-                    </table>
                 </div>
             </section>
 
             <section id="notifications" class="page">
-                <h1 id="title-notifications">Notifications</h1>
-                <div class="empty-box">
-                    <div style="font-size:50px;">🔔</div>
-                    <p id="empty-msg">No notifications found</p>
+                <h1 id="txt-notif">Notifications</h1>
+                <div class="empty-state">
+                    <i class="fas fa-bell-slash"></i>
+                    <p id="txt-empty">No notifications found at the moment.</p>
                 </div>
             </section>
+
         </main>
     </div>
 
