@@ -3,93 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studies Admin Dashboard | Sami</title>
+    <title>CMS Panel | Admin Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <div id="login-screen" class="overlay">
+    <div id="login-overlay" class="login-wrapper">
         <div class="login-card">
-            <div class="icon-header">📖</div>
-            <h2>Studies Login</h2>
-            <p>Please enter your credentials</p>
-            <div class="form-group">
-                <input type="text" id="userInput" placeholder="Username ">
-                <input type="password" id="passInput" placeholder="Password ">
-                <button class="primary-btn" onclick="handleLogin()">Sign In</button>
-            </div>
-            <p id="error-txt" class="error-msg">Invalid username or password!</p>
+            <h2>CMS Panel Login</h2>
+            <input type="text" id="userInput" placeholder="Username ">
+            <input type="password" id="passInput" placeholder="Password ">
+            <button class="primary-btn" onclick="handleLogin()">Sign In</button>
+            <p id="err" class="error-msg">Invalid login!</p>
         </div>
     </div>
 
-    <div id="dashboard-main" style="display: none;">
-        <header>
-            <div class="brand">📖 Studies</div>
-            <div class="header-right">
-                <select id="langSelector" onchange="changeLanguage()" class="lang-dropdown">
-                    <option value="en">English</option>
-                    <option value="bn">বাংলা</option>
-                </select>
-                <span class="user-info"><i class="fas fa-user-shield"></i> Sami Admin</span>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i></button>
-            </div>
-        </header>
-
-        <div class="app-layout">
-            <nav class="sidebar">
-                <ul>
-                    <li onclick="showPage('page-dash')" id="nav-dash" class="active"><i class="fas fa-chart-pie"></i> Dashboard</li>
-                    <li onclick="showPage('page-cal')" id="nav-cal"><i class="fas fa-calendar-days"></i> Calendar</li>
-                    <li onclick="showPage('page-courses')" id="nav-courses"><i class="fas fa-graduation-cap"></i> Courses</li>
-                    <li onclick="showPage('page-notif')" id="nav-notif"><i class="fas fa-bell"></i> Notifications</li>
+    <div id="app-wrapper" style="display: none;">
+        <div class="container">
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <i class="fas fa-bars"></i>
+                    <span>CMS Panel</span>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="active" onclick="navigate('dashboard', this)">
+                        <i class="fas fa-th-large"></i> <span>Dashboard</span>
+                    </li>
+                    <li onclick="navigate('calendar', this)">
+                        <i class="fas fa-calendar-alt"></i> <span>Calendar</span>
+                    </li>
+                    <li onclick="navigate('chat', this)">
+                        <i class="fas fa-comments"></i> <span>Chat</span>
+                    </li>
+                    <li onclick="navigate('notifications', this)">
+                        <i class="fas fa-bell"></i> <span>Notifications</span>
+                    </li>
+                    
+                    <li class="menu-label">REPORTS & ANALYTICS</li>
+                    
+                    <li onclick="navigate('performance', this)">
+                        <i class="fas fa-chart-line"></i> <span>Performance</span>
+                    </li>
+                    <li onclick="navigate('reports', this)">
+                        <i class="fas fa-file-alt"></i> <span>Reports</span>
+                    </li>
+                    <li onclick="navigate('settings', this)">
+                        <i class="fas fa-user-shield"></i> <span>Admin Settings</span>
+                    </li>
                 </ul>
-            </nav>
+            </aside>
 
-            <main class="content-area">
-                <section id="page-dash" class="content-page active">
-                    <h1 id="txt-dash-head">Analytics Overview</h1>
-                    <div class="stats-grid">
-                        <div class="card"><canvas id="passChart"></canvas></div>
-                        <div class="card"><canvas id="levelChart"></canvas></div>
-                        <div class="card"><canvas id="perfChart"></canvas></div>
-                    </div>
-                </section>
+            <main class="main-content">
+                <header class="top-bar">
+                    <div id="page-title">Dashboard Overview</div>
+                    <div class="user-meta" onclick="logout()">Logout 👤</div>
+                </header>
 
-                <section id="page-cal" class="content-page">
-                    <h1 id="txt-cal-head">Schedule Calendar</h1>
-                    <div class="card">
-                        <div class="calendar-grid" id="calendarBody"></div>
-                    </div>
-                </section>
-
-                <section id="page-courses" class="content-page">
-                    <div class="flex-row">
-                        <h1 id="txt-course-head">Active Courses</h1>
-                        <button class="primary-btn">+ New Course</button>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="card">
-                            <span class="status-badge">Active</span>
-                            <h3>Modern JavaScript</h3>
-                            <p>30 Students • Since Feb 2024</p>
+                <div class="content-body">
+                    <section id="page-dashboard" class="page active">
+                        <div class="grid">
+                            <div class="card"><canvas id="chart1"></canvas></div>
+                            <div class="card"><canvas id="chart2"></canvas></div>
                         </div>
-                        <div class="card">
-                            <span class="status-badge">Active</span>
-                            <h3>Python Data Science</h3>
-                            <p>20 Students • Since Apr 2024</p>
-                        </div>
-                    </div>
-                </section>
+                    </section>
 
-                <section id="page-notif" class="content-page">
-                    <h1 id="txt-notif-head">Notifications</h1>
-                    <div class="empty-state">
-                        <i class="fas fa-bell-slash"></i>
-                        <p id="txt-empty">No new notifications found.</p>
-                    </div>
-                </section>
+                    <section id="page-calendar" class="page">
+                        <div class="card">
+                            <h2 id="calHeader">April 2026</h2>
+                            <div class="calendar-grid" id="calGrid"></div>
+                        </div>
+                    </section>
+
+                    <section id="page-chat" class="page"><h1>Chat Room</h1><p>Messaging system coming soon...</p></section>
+                    <section id="page-performance" class="page"><h1>Performance Analytics</h1><canvas id="chart3"></canvas></section>
+                </div>
             </main>
         </div>
     </div>
