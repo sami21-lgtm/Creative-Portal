@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studies Admin | Sami</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-brand">📖 Studies</div>
+        <div class="header-right">
+            <select id="langSelector" onchange="changeLanguage()" class="lang-dropdown">
+                <option value="en">English</option>
+                <option value="bn">বাংলা</option>
+                <option value="ar">العربية</option>
+            </select>
+            <span class="user-name">👤 alice.johnson</span>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <nav class="sidebar">
+            <ul>
+                <li onclick="navigate('dashboard')" id="nav-dashboard" class="active">Dashboard</li>
+                <li onclick="navigate('calendar')" id="nav-calendar">Calendar</li>
+                <li onclick="navigate('courses')" id="nav-courses">Courses</li>
+                <li onclick="navigate('leaderboard')" id="nav-leaderboard">Leaderboard</li>
+                <li onclick="navigate('notifications')" id="nav-notifications">Notifications</li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section id="dashboard" class="page active">
+                <h1 id="title-dashboard">Analytics Overview</h1>
+                <div class="grid">
+                    <div class="card"><canvas id="passChart"></canvas></div>
+                    <div class="card"><canvas id="pieChart"></canvas></div>
+                    <div class="card"><canvas id="barChart"></canvas></div>
+                </div>
+            </section>
+
+            <section id="calendar" class="page">
+                <h1 id="title-calendar">Student Schedule Calendar</h1>
+                <div class="card">
+                    <div class="calendar-grid" id="calGrid"></div>
+                </div>
+            </section>
+
+            <section id="courses" class="page">
+                <div class="flex-header">
+                    <h1 id="title-courses">Active Courses</h1>
+                    <button class="primary-btn">+ Add Course</button>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                        <span class="badge">Active</span>
+                        <h3>Modern JavaScript</h3>
+                        <p>30 Students • Feb 2024</p>
+                    </div>
+                    <div class="card">
+                        <span class="badge">Active</span>
+                        <h3>Python for Data Science</h3>
+                        <p>20 Students • Apr 2024</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="leaderboard" class="page">
+                <h1 id="title-leaderboard">Leaderboard</h1>
+                <div class="card">
+                    <table style="width:100%; text-align:left; border-collapse:collapse;">
+                        <tr style="border-bottom:1px solid #ddd; height:40px;">
+                            <th>Rank</th><th>Student</th><th>Score</th>
+                        </tr>
+                        <tr>
+                            <td>1 🏆</td><td>Carol White</td><td>85%</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <section id="notifications" class="page">
+                <h1 id="title-notifications">Notifications</h1>
+                <div class="empty-box">
+                    <div style="font-size:50px;">🔔</div>
+                    <p id="empty-msg">No notifications found</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
